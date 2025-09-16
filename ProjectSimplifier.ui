@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProjectSimplifierClass</class>
+ <widget class="QMainWindow" name="ProjectSimplifierClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>667</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>667</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>667</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>ProjectSimplifier</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTreeWidget" name="BOX_PrimitiveDirectView">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>120</y>
+      <width>391</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>文件名</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>大小</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QTreeWidget" name="BOX_ProcessedDirectView">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>120</y>
+      <width>391</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>文件名</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>大小</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLineEdit" name="BOX_InputFilePath">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>50</y>
+      <width>701</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BTN_OpenDir">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>50</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开目录</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sLAB_Dir">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>53</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>项目目录：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sLAB_Primitive">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>100</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>原始大小：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sLAB_Processed">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>100</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>清理后大小：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LAB_PrimitiveSize">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>100</y>
+      <width>301</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>未选定目录</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LAB_ProcessedSize">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>100</y>
+      <width>291</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>未选定目录</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BTN_executeProcess">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>600</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>执行清理</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LAB_ShowRemovableSize">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>220</y>
+      <width>53</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Content</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LAB_DeletingFileStatus">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>620</y>
+      <width>771</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Content</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LAB_DeletingDirStatus">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>580</y>
+      <width>771</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Content</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LAB_ShowTips">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>600</y>
+      <width>441</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Content</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sLAB_ProgramTitle">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>20</y>
+      <width>611</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;VS项目瘦身&lt;/span&gt;：通过删除项目编译或运行调试时产生的中间项和pdb文件，来缩小项目体积&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="ProjectSimplifier.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>BTN_executeProcess</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjectSimplifierClass</receiver>
+   <slot>executeSimpifyDirect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>623</x>
+     <y>402</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>679</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BTN_OpenDir</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjectSimplifierClass</receiver>
+   <slot>GetDirect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>608</x>
+     <y>61</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>545</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>executeSimpifyDirect()</slot>
+  <slot>GetDirect()</slot>
+ </slots>
+</ui>
