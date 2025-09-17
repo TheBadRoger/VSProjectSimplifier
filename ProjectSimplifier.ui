@@ -182,9 +182,9 @@
    <widget class="QLabel" name="LAB_ShowRemovableSize">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>450</x>
       <y>220</y>
-      <width>53</width>
+      <width>111</width>
       <height>201</height>
      </rect>
     </property>
