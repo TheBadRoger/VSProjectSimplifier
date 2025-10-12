@@ -27,7 +27,34 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0" colspan="2">
+    <item row="3" column="0">
+     <layout class="QVBoxLayout" name="DelStatLayout">
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>15</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="LAB_DeletingFileStatus">
+        <property name="text">
+         <string>Content</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="LAB_DeletingDirStatus">
+        <property name="text">
+         <string>Content</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0" colspan="3">
      <layout class="QVBoxLayout" name="ProgramTitleLayout">
       <property name="leftMargin">
        <number>30</number>
@@ -53,7 +80,7 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="1" column="0" colspan="3">
      <layout class="QHBoxLayout" name="PathSelectionLayout">
       <property name="leftMargin">
        <number>30</number>
@@ -90,7 +117,33 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0" colspan="2">
+    <item row="3" column="2">
+     <layout class="QHBoxLayout" name="ExecutionLayout">
+      <property name="leftMargin">
+       <number>120</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <property name="bottomMargin">
+       <number>15</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="BTN_executeProcess">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>执行清理</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0" colspan="3">
      <layout class="QGridLayout" name="ShowTreeLayout">
       <property name="leftMargin">
        <number>30</number>
@@ -178,43 +231,10 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
-     <layout class="QVBoxLayout" name="DelStatLayout">
-      <property name="leftMargin">
-       <number>30</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>15</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="LAB_DeletingFileStatus">
-        <property name="text">
-         <string>Content</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="LAB_DeletingDirStatus">
-        <property name="text">
-         <string>Content</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
     <item row="3" column="1">
-     <layout class="QHBoxLayout" name="ExecutionLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
+     <layout class="QHBoxLayout" name="StatusShowLayout">
       <property name="topMargin">
        <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>30</number>
       </property>
       <property name="bottomMargin">
        <number>15</number>
@@ -226,16 +246,6 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="BTN_executeProcess">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>执行清理</string>
         </property>
        </widget>
       </item>
