@@ -39,9 +39,12 @@ void ProjectSimplifier::DeleteFile(const QString& localpath) {
 }
 
 void ProjectSimplifier::GetDirect() {
-    RootPath = QFileDialog::getExistingDirectory(this, "选择目录", QCoreApplication::applicationDirPath());
-    ui.BOX_InputFilePath->setText(RootPath);
-    if (!ui.BOX_InputFilePath->text().isEmpty() && CheckValidDirect()) ShowDirectOnBox();
+    QString tmpPath = QFileDialog::getExistingDirectory(this, "选择目录", RootPath);
+    if (!tmpPath.isEmpty()) {
+        RootPath = tmpPath;
+        ui.BOX_InputFilePath->setText(RootPath);
+        ShowDirectOnBox();
+    }
 }
 
 void ProjectSimplifier::ShowDirectOnBox() {
@@ -190,19 +193,27 @@ double ProjectSimplifier::ShowSize(qint64 byte, SizeUnits unit) {
 }
 
 QString ProjectSimplifier::AutoShowSize(qint64 byte) {
-    if (byte <= 1024) return QString("%1 B").arg(ShowSize(byte, SizeUnits::Byte));
-    else if (byte <= 1048576) return QString("%1 KB").arg(QString::number(ShowSize(byte, SizeUnits::Kilo), 'f', 2));
-    else if (byte <= 1073741824) return QString("%1 MB").arg(QString::number(ShowSize(byte, SizeUnits::Mega), 'f', 2));
-    else return QString("%1 GB").arg(QString::number(ShowSize(byte, SizeUnits::Giga), 'f', 2));
+    if (byte < 1024)
+        return QString("%1 B").arg(ShowSize(byte, SizeUnits::Byte));
+
+    else if (byte < 1048576)
+        return QString("%1 KB").arg(QString::number(ShowSize(byte, SizeUnits::Kilo), 'f', 2));
+
+    else if (byte < 1073741824)
+        return QString("%1 MB").arg(QString::number(ShowSize(byte, SizeUnits::Mega), 'f', 2));
+
+    else
+        return QString("%1 GB").arg(QString::number(ShowSize(byte, SizeUnits::Giga), 'f', 2));
 }
 
 void ProjectSimplifier::SetItemBold(QTreeWidgetItem* item) {
     QFont bold = item->font(0);
     bold.setBold(true);
-    for (int i = 0; i <= item->columnCount() - 1; i++)item->setFont(i, bold);
+    for (int i = 0; i <= item->columnCount() - 1; i++) item->setFont(i, bold);
 }
 
 void ProjectSimplifier::insertTreeItem(QTreeWidget* ptree, QTreeWidgetItem* item, QTreeWidgetItem* parent) {
-    if (parent == nullptr) ptree->addTopLevelItem(item);
+    if (parent == nullptr)
+        ptree->addTopLevelItem(item);
     else parent->addChild(item);
 }
