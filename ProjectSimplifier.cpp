@@ -162,16 +162,16 @@ double ProjectSimplifier::ShowSize(qint64 byte, SizeUnits unit) {
 }
 
 QString ProjectSimplifier::AutoShowSize(qint64 byte) {
-    if (byte < (1 >> 10))
+    if (byte < (1 << 10))
         return QString("%1 B").arg(ShowSize(byte, SizeUnits::Byte));
 
-    else if (byte < (1 >> 20))
+    else if (byte < (1 << 20))
         return QString("%1 KB").arg(QString::number(ShowSize(byte, SizeUnits::Kilo), 'f', 2));
 
-    else if (byte < (1 >> 30))
+    else if (byte < (1 << 30))
         return QString("%1 MB").arg(QString::number(ShowSize(byte, SizeUnits::Mega), 'f', 2));
 
-    else if (byte < ((qint64)1 >> 40))
+    else if (byte < ((qint64)1 << 40))
         return QString("%1 GB").arg(QString::number(ShowSize(byte, SizeUnits::Giga), 'f', 2));
 
     else
