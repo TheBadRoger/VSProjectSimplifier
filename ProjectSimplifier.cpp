@@ -12,29 +12,19 @@ ProjectSimplifier::~ProjectSimplifier()
 {}
 
 void ProjectSimplifier::executeSimpifyDirect() {
-    ui.LAB_ShowTips->setText("");
-    ui.BTN_OpenDir->setEnabled(false);
-    if (CheckValidDirect()) DeleteFile(RootPath);
-    ui.LAB_DeletingDirStatus->setText("完成");
-    ui.LAB_DeletingFileStatus->setText("");
-    ui.BTN_OpenDir->setEnabled(true);
-}
+	if (DelFileList.isEmpty())
+        ui.statusBar->showMessage(QString("没有可删除的文件"));
+    else {
+        for (const auto& item : DelFileList) {
+            if (QFileInfo(item).isDir())
+                QDir(item).removeRecursively();
 
-void ProjectSimplifier::DeleteFile(const QString& localpath) {
-    QFileInfo local(localpath);
-    if (local.isDir()) {
-        QDir localdir(localpath, "*", DefaultSort, DefaultFilter);
+            else if (QFileInfo(item).isFile())
+                QFile(item).remove();
 
-        ui.LAB_DeletingDirStatus->setText(QString("正在删除目录：%1 ...").arg(localpath));
-        for (const auto& sitem : localdir.entryInfoList()) DeleteFile(sitem.filePath());
-        if (!localdir.count()) localdir.remove(localpath);
-    }
-    else if (local.isFile() && isRemovableFile(local.suffix())) {
-        QFile localfile(localpath);
-
-        ui.LAB_DeletingFileStatus->setText(QString("正在删除文件：%1 ...").arg(localfile.fileName()));
-        localfile.setPermissions(localpath, QFile::WriteOwner);
-        localfile.remove(localpath);
+            ui.statusBar->showMessage(QString("正在删除：%1").arg(item));
+        }
+        ui.statusBar->showMessage(QString("完成"));
     }
 }
 
@@ -52,11 +42,11 @@ void ProjectSimplifier::ShowDirectOnBox() {
     ClearData();
     ui.BTN_OpenDir->setEnabled(false);
 
-    GeneratePrimitiveTree(RootPath, CountCatch, PrimitiveSize);
+    qint64 PlaceHolder = 0;
+    GenerateDirTree(RootPath, PlaceHolder, PrimitiveSize, ProcessedSize);
+
     ui.BOX_PrimitiveDirectView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui.LAB_PrimitiveSize->setText(AutoShowSize(PrimitiveSize));
-
-    GenerateProcessedTree(RootPath, CountCatch, ProcessedSize);
     ui.BOX_ProcessedDirectView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui.LAB_ProcessedSize->setText(AutoShowSize(ProcessedSize));
 
@@ -68,8 +58,6 @@ void ProjectSimplifier::ShowDirectOnBox() {
 
 void ProjectSimplifier::initalizeUI() {
     ui.LAB_ShowRemovableSize->setText("");
-    ui.LAB_DeletingDirStatus->setText("");
-    ui.LAB_DeletingFileStatus->setText("");
     ui.LAB_ShowTips->setText("");
 }
 
@@ -86,85 +74,62 @@ bool ProjectSimplifier::CheckValidDirect() {
 }
 
 void ProjectSimplifier::ClearData() {
-    QTreeWidgetItem* item = ui.BOX_PrimitiveDirectView->topLevelItem(0);
-    while (item) {
-        ClearTree(item);
-        item = ui.BOX_PrimitiveDirectView->topLevelItem(0);
-    }
-
-    item = ui.BOX_ProcessedDirectView->topLevelItem(0);
-    while (item) {
-        ClearTree(item);
-        item = ui.BOX_ProcessedDirectView->topLevelItem(0);
-    }
-
+	ui.BOX_PrimitiveDirectView->clear();
+    ui.BOX_ProcessedDirectView->clear();
     PrimitiveSize = ProcessedSize = 0;
 }
 
 bool ProjectSimplifier::isRemovableFile(const QString& fext) {
-    if (extList.find(fext) == extList.end())return false;
+    if (extList.find(fext) == extList.end()) return false;
     else return true;
 }
 
-void ProjectSimplifier::ClearTree(QTreeWidgetItem* item) {
-    if (!item->childCount()) delete item;
-    else {
-        for (int i = 0; i < item->childCount(); i++){
-            QTreeWidgetItem* childItem = item->child(0);
-            ClearTree(childItem);
-        }
-        delete item;
-    }
-}
+void ProjectSimplifier::GenerateDirTree(const QDir& local, qint64& scount, qint64& primsize, qint64& procsize, QTreeWidgetItem* primparent, QTreeWidgetItem* procparent) {
+    for (const auto& item : local.entryInfoList(DefaultFilter, DefaultSort)) {
+        ui.statusBar->showMessage(QString("正在检查：%1").arg(item.path()));
 
-void ProjectSimplifier::GeneratePrimitiveTree(const QString& localpath, qint64& scount, qint64& fsize, QTreeWidgetItem* parent) {
-    QDir local(localpath);
-    local.setFilter(DefaultFilter);
-    for (const auto& item : local.entryInfoList(QDir::NoFilter, DefaultSort)) {
         if (item.isDir()) {
-            QTreeWidgetItem* diritem = new QTreeWidgetItem(QStringList() << item.fileName(), (int)itemType::Dir);
-            qint64 subItemCount = QDir(item.filePath(), "*", DefaultSort, DefaultFilter).count(), localSize = 0;
+            QTreeWidgetItem* diritem_prim = new QTreeWidgetItem(QStringList() << item.fileName(), (int)itemType::Dir),
+                * diritem_proc = new QTreeWidgetItem(QStringList() << item.fileName(), (int)itemType::Dir);
+            qint64 subItemCount = QDir(item.filePath(), "*", DefaultSort, DefaultFilter).count(), localPrimSize = 0, localProcSize = 0;
 
-            GeneratePrimitiveTree(item.filePath(), subItemCount, localSize, diritem);
+            GenerateDirTree(item.filePath(), subItemCount, localPrimSize, localProcSize, diritem_prim, diritem_proc);
 
-            fsize += localSize;
-            diritem->setText(1, AutoShowSize(localSize));
-            if (!subItemCount) SetItemBold(diritem), scount--;
+            if (!subItemCount) {
+                primsize += localPrimSize, scount--;
 
-            insertTreeItem(ui.BOX_PrimitiveDirectView, diritem, parent);
+                diritem_prim->setText(1, AutoShowSize(localPrimSize)), SetItemBold(diritem_prim);
+                insertTreeItem(ui.BOX_PrimitiveDirectView, diritem_prim, primparent);
+
+				DelFileList.push_back(item.filePath());
+            }
+            else {
+                primsize += localPrimSize, procsize += localProcSize;
+
+                diritem_prim->setText(1, AutoShowSize(localPrimSize));
+                insertTreeItem(ui.BOX_PrimitiveDirectView, diritem_prim, primparent);
+
+                diritem_proc->setText(1, AutoShowSize(localProcSize));
+                insertTreeItem(ui.BOX_ProcessedDirectView, diritem_proc, procparent);
+            }
         }
         else if (item.isFile()) {
-            QTreeWidgetItem* fileitem = new QTreeWidgetItem(QStringList() << item.fileName() << AutoShowSize(item.size()), (int)itemType::File);
+            QTreeWidgetItem* fileitem_prim = new QTreeWidgetItem(QStringList() << item.fileName() << AutoShowSize(item.size()), (int)itemType::File),
+                * fileitem_proc = new QTreeWidgetItem(QStringList() << item.fileName() << AutoShowSize(item.size()), (int)itemType::File);
 
-            if (isRemovableFile(item.suffix())) SetItemBold(fileitem), scount--;
-            fsize += item.size();
+            if (isRemovableFile(item.suffix())) {
+                primsize += item.size(), scount--;
+                SetItemBold(fileitem_prim);
+                insertTreeItem(ui.BOX_PrimitiveDirectView, fileitem_prim, primparent);
 
-            insertTreeItem(ui.BOX_PrimitiveDirectView, fileitem, parent);
-        }
-    }
-}
+                DelFileList.push_back(item.filePath());
+            }
+            else {
+                insertTreeItem(ui.BOX_PrimitiveDirectView, fileitem_prim, primparent);
+                insertTreeItem(ui.BOX_ProcessedDirectView, fileitem_proc, procparent);
+                primsize += item.size(), procsize += item.size();
+            }
 
-void ProjectSimplifier::GenerateProcessedTree(const QString& localpath, qint64& scount, qint64& fsize, QTreeWidgetItem* parent) {
-    QDir local(localpath);
-    local.setFilter(DefaultFilter);
-    for (const auto& item : local.entryInfoList(QDir::NoFilter, QDir::DirsFirst | QDir::Name)) {
-        if (item.isDir()) {
-            QTreeWidgetItem* diritem = new QTreeWidgetItem(QStringList() << item.fileName(), (int)itemType::Dir);
-            qint64 subItemCount = QDir(item.filePath(), "*", DefaultSort, DefaultFilter).count(), localSize = 0;
-
-            GenerateProcessedTree(item.filePath(), subItemCount, localSize, diritem);
-
-            diritem->setText(1, AutoShowSize(localSize));
-
-            if (subItemCount) insertTreeItem(ui.BOX_ProcessedDirectView, diritem, parent), fsize += localSize;
-            else scount--;
-
-        }
-        else if (item.isFile()) {
-            QTreeWidgetItem* fileitem = new QTreeWidgetItem(QStringList() << item.fileName() << AutoShowSize(item.size()), (int)itemType::File);
-
-            if (!isRemovableFile(item.suffix())) insertTreeItem(ui.BOX_ProcessedDirectView, fileitem, parent), fsize += item.size();
-            else scount--;
         }
     }
 }
@@ -187,23 +152,30 @@ double ProjectSimplifier::ShowSize(qint64 byte, SizeUnits unit) {
         return byte / 1073741824.0;
         break;
 
+    case SizeUnits::Tera:
+        return byte / 1099511627776.0;
+		break;
+
     default:
         return byte;
     }
 }
 
 QString ProjectSimplifier::AutoShowSize(qint64 byte) {
-    if (byte < 1024)
+    if (byte < (1 >> 10))
         return QString("%1 B").arg(ShowSize(byte, SizeUnits::Byte));
 
-    else if (byte < 1048576)
+    else if (byte < (1 >> 20))
         return QString("%1 KB").arg(QString::number(ShowSize(byte, SizeUnits::Kilo), 'f', 2));
 
-    else if (byte < 1073741824)
+    else if (byte < (1 >> 30))
         return QString("%1 MB").arg(QString::number(ShowSize(byte, SizeUnits::Mega), 'f', 2));
 
-    else
+    else if (byte < ((qint64)1 >> 40))
         return QString("%1 GB").arg(QString::number(ShowSize(byte, SizeUnits::Giga), 'f', 2));
+
+    else
+        return QString("%1 TB").arg(QString::number(ShowSize(byte, SizeUnits::Tera), 'f', 2));
 }
 
 void ProjectSimplifier::SetItemBold(QTreeWidgetItem* item) {

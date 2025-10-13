@@ -27,33 +27,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="3" column="0">
-     <layout class="QVBoxLayout" name="DelStatLayout">
-      <property name="leftMargin">
-       <number>30</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>15</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="LAB_DeletingFileStatus">
-        <property name="text">
-         <string>Content</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="LAB_DeletingDirStatus">
-        <property name="text">
-         <string>Content</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
     <item row="0" column="0" colspan="3">
      <layout class="QVBoxLayout" name="ProgramTitleLayout">
       <property name="leftMargin">
@@ -75,6 +48,52 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="1">
+     <layout class="QHBoxLayout" name="StatusShowLayout">
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>15</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="LAB_ShowTips">
+        <property name="text">
+         <string>Content</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="2">
+     <layout class="QHBoxLayout" name="ExecutionLayout">
+      <property name="leftMargin">
+       <number>120</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <property name="bottomMargin">
+       <number>15</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="BTN_executeProcess">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>执行清理</string>
         </property>
        </widget>
       </item>
@@ -117,32 +136,6 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="2">
-     <layout class="QHBoxLayout" name="ExecutionLayout">
-      <property name="leftMargin">
-       <number>120</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>30</number>
-      </property>
-      <property name="bottomMargin">
-       <number>15</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="BTN_executeProcess">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>执行清理</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
     <item row="2" column="0" colspan="3">
      <layout class="QGridLayout" name="ShowTreeLayout">
       <property name="leftMargin">
@@ -157,25 +150,8 @@
       <property name="bottomMargin">
        <number>5</number>
       </property>
-      <item row="4" column="3">
-       <widget class="QLabel" name="LAB_ShowRemovableSize">
-        <property name="text">
-         <string>Content</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="sLAB_Primitive">
-        <property name="text">
-         <string>原始大小：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLabel" name="LAB_ProcessedSize">
+      <item row="1" column="2">
+       <widget class="QLabel" name="LAB_PrimitiveSize">
         <property name="text">
          <string>未选定目录</string>
         </property>
@@ -198,13 +174,6 @@
         </column>
        </widget>
       </item>
-      <item row="1" column="4">
-       <widget class="QLabel" name="sLAB_Processed">
-        <property name="text">
-         <string>清理后大小：</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="4" colspan="3">
        <widget class="QTreeWidget" name="BOX_ProcessedDirectView">
         <column>
@@ -219,8 +188,22 @@
         </column>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="LAB_PrimitiveSize">
+      <item row="1" column="0">
+       <widget class="QLabel" name="sLAB_Primitive">
+        <property name="text">
+         <string>原始大小：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLabel" name="sLAB_Processed">
+        <property name="text">
+         <string>清理后大小：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QLabel" name="LAB_ProcessedSize">
         <property name="text">
          <string>未选定目录</string>
         </property>
@@ -229,18 +212,8 @@
         </property>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item row="3" column="1">
-     <layout class="QHBoxLayout" name="StatusShowLayout">
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>15</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="LAB_ShowTips">
+      <item row="4" column="3">
+       <widget class="QLabel" name="LAB_ShowRemovableSize">
         <property name="text">
          <string>Content</string>
         </property>
@@ -253,6 +226,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
