@@ -25,9 +25,137 @@
   <property name="windowTitle">
    <string>ProjectSimplifier</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0" colspan="3">
+  <widget class="QWidget" name="CentralWidget">
+   <layout class="QGridLayout" name="SubGridLayout">
+    <item row="2" column="0" colspan="2">
+     <layout class="QGridLayout" name="ShowTreeLayout">
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item row="4" column="4" colspan="3">
+       <widget class="QTreeWidget" name="BOX_ProcessedDirectView">
+        <column>
+         <property name="text">
+          <string>文件名</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>大小</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="LAB_PrimitiveSize">
+        <property name="text">
+         <string>未选定目录</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="sLAB_Primitive">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>原始大小：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLabel" name="LAB_ShowRemovableSize">
+        <property name="text">
+         <string>Content</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLabel" name="sLAB_Processed">
+        <property name="text">
+         <string>清理后大小：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QLabel" name="LAB_ProcessedSize">
+        <property name="text">
+         <string>未选定目录</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="3">
+       <widget class="QTreeWidget" name="BOX_PrimitiveDirectView">
+        <column>
+         <property name="text">
+          <string>文件名</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>大小</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <layout class="QHBoxLayout" name="PathSelectionLayout">
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="sLAB_Dir">
+        <property name="text">
+         <string>根目录：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="BOX_InputFilePath">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="BTN_OpenDir">
+        <property name="text">
+         <string>打开目录</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0" colspan="2">
      <layout class="QVBoxLayout" name="ProgramTitleLayout">
       <property name="leftMargin">
        <number>30</number>
@@ -53,39 +181,19 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="1">
-     <layout class="QHBoxLayout" name="StatusShowLayout">
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>15</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="LAB_ShowTips">
-        <property name="text">
-         <string>Content</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="2">
+    <item row="9" column="1">
      <layout class="QHBoxLayout" name="ExecutionLayout">
       <property name="leftMargin">
-       <number>120</number>
+       <number>240</number>
       </property>
       <property name="topMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>30</number>
       </property>
       <property name="bottomMargin">
-       <number>15</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="BTN_executeProcess">
@@ -99,13 +207,13 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0" colspan="3">
-     <layout class="QHBoxLayout" name="PathSelectionLayout">
+    <item row="4" column="0" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>111</number>
+      </property>
       <property name="leftMargin">
        <number>30</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
       </property>
       <property name="rightMargin">
        <number>30</number>
@@ -114,111 +222,16 @@
        <number>5</number>
       </property>
       <item>
-       <widget class="QLabel" name="sLAB_Dir">
-        <property name="text">
-         <string>项目目录：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="BOX_InputFilePath">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="BTN_OpenDir">
-        <property name="text">
-         <string>打开目录</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="0" colspan="3">
-     <layout class="QGridLayout" name="ShowTreeLayout">
-      <property name="leftMargin">
-       <number>30</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>30</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item row="1" column="2">
-       <widget class="QLabel" name="LAB_PrimitiveSize">
-        <property name="text">
-         <string>未选定目录</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="3">
-       <widget class="QTreeWidget" name="BOX_PrimitiveDirectView">
-        <column>
-         <property name="text">
-          <string>文件名</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>大小</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item row="4" column="4" colspan="3">
-       <widget class="QTreeWidget" name="BOX_ProcessedDirectView">
-        <column>
-         <property name="text">
-          <string>文件名</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>大小</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="sLAB_Primitive">
-        <property name="text">
-         <string>原始大小：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QLabel" name="sLAB_Processed">
-        <property name="text">
-         <string>清理后大小：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLabel" name="LAB_ProcessedSize">
-        <property name="text">
-         <string>未选定目录</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
-       <widget class="QLabel" name="LAB_ShowRemovableSize">
+       <widget class="QLabel" name="LAB_ShowPrimitiveCount">
         <property name="text">
          <string>Content</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="LAB_ShowProcessedCount">
+        <property name="text">
+         <string>Content</string>
         </property>
        </widget>
       </item>
@@ -234,40 +247,40 @@
  </resources>
  <connections>
   <connection>
-   <sender>BTN_executeProcess</sender>
-   <signal>clicked()</signal>
-   <receiver>ProjectSimplifierClass</receiver>
-   <slot>executeSimpifyDirect()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>623</x>
-     <y>402</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>679</x>
-     <y>308</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>BTN_OpenDir</sender>
    <signal>clicked()</signal>
    <receiver>ProjectSimplifierClass</receiver>
    <slot>GetDirect()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>608</x>
-     <y>61</y>
+     <x>744</x>
+     <y>60</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>18</y>
+     <x>796</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BTN_executeProcess</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjectSimplifierClass</receiver>
+   <slot>SimplifyDirect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>721</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>786</x>
+     <y>502</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>executeSimpifyDirect()</slot>
   <slot>GetDirect()</slot>
+  <slot>SimplifyDirect()</slot>
  </slots>
 </ui>
