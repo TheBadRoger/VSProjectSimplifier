@@ -20,7 +20,7 @@ void SimplifyThread::threadShowDirInfo() {
     emit SetEnable_Main_BTN_OpenDir(false);
     emit SetEnable_Main_BTN_executeProcess(false);
     emit SetText_Main_LAB_PrimitiveSize("计算中...");
-    emit SetText_Main_LAB_PrimitiveSize("计算中...");
+    emit SetText_Main_LAB_ProcessedSize("计算中...");
     emit SetText_Main_LAB_ShowRemovableSize("计算中...");
     emit SetText_Main_LAB_ShowPrimitiveCount("计算中...");
     emit SetText_Main_LAB_ShowProcessedCount("计算中...");
